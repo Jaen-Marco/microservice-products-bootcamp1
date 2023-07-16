@@ -1,9 +1,6 @@
 package com.microservices.project1.productSystem.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,9 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Account {
 
-    @Id private Long id;
-    private String type; //Ahorro, Cuenta Corriente y Plazo Fijo
+    @Id
+    private Long id;
     private Long clientId;
     private Double balance;
+    private AccountType accountType;
 
 }
