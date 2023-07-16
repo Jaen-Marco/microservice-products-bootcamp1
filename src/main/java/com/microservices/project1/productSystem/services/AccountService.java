@@ -14,4 +14,5 @@ public interface AccountService {
     Flux<Account> findByClientId (Long clientId);
     Mono<Double> debit (Long id, double amount);
     Mono<Double> deposit (Long id, double amount);
+    Mono<Void> resetMovements (Long id);
 }

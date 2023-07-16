@@ -43,4 +43,8 @@ public class AccountController {
     public Mono<Double> depositA(@PathVariable Long id, @PathVariable double amount) {
         return accountService.deposit(id, amount);
     }
+
+    @PutMapping("/client/{clientId}/resetMovs")
+    public Mono<Void> resetMovementsA(@PathVariable Long clientId) { return accountService.resetMovements(clientId); }
+
 }
