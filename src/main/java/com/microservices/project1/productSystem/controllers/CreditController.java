@@ -1,7 +1,7 @@
 package com.microservices.project1.productSystem.controllers;
 
 import com.microservices.project1.productSystem.models.Credit;
-import com.microservices.project1.productSystem.services.CreditService;
+import com.microservices.project1.productSystem.services.interf.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;

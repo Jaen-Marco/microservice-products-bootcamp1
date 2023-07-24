@@ -1,4 +1,4 @@
-package com.microservices.project1.productSystem.services;
+package com.microservices.project1.productSystem.services.interf;
 
 import com.microservices.project1.productSystem.models.Credit;
 import reactor.core.publisher.Flux;

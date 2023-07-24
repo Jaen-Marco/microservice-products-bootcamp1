@@ -2,7 +2,7 @@ package com.microservices.project1.productSystem.services.impl;
 
 import com.microservices.project1.productSystem.models.Credit;
 import com.microservices.project1.productSystem.repositories.CreditRepository;
-import com.microservices.project1.productSystem.services.CreditService;
+import com.microservices.project1.productSystem.services.interf.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -32,10 +32,11 @@ public class CreditServiceImpl implements CreditService {
     public Mono<Credit> update(Long id, Credit credit) {
         return creditRepository.findById(id)
                 .flatMap(existingCredit -> {
-                    existingCredit.setType(credit.getType());
                     existingCredit.setClientId(credit.getClientId());
                     existingCredit.setBalance(credit.getBalance());
                     existingCredit.setCreditLine(credit.getCreditLine());
+                    existingCredit.getCreditType().setId(credit.getCreditType().getId());
+                    existingCredit.getCreditType().setNameCredit(credit.getCreditType().getNameCredit());
                     return creditRepository.save(existingCredit);
                 });
     }

@@ -3,7 +3,7 @@ package com.microservices.project1.productSystem.services.impl;
 import com.microservices.project1.productSystem.models.Account;
 import com.microservices.project1.productSystem.models.AccountType;
 import com.microservices.project1.productSystem.repositories.AccountRepository;
-import com.microservices.project1.productSystem.services.AccountService;
+import com.microservices.project1.productSystem.services.interf.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Mono<Double> debit(Long id, double amount) {
-        var newAmount = validateMovements(id).block() ? amount + 20 : amount; // Cobrando comisión si hay más de 20 movimientos
+        var newAmount = Boolean.TRUE.equals(validateMovements(id).block()) ? amount + 20 : amount; // Cobrando comisión si hay más de 20 movimientos
         return accountRepository.findById(id)
                 .map(updateAccountWithNewBalance(newAmount, Boolean.TRUE))
                 .flatMap(accountRepository::save)
@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Mono<Double> deposit(Long id, double amount) {
-        var newAmount = validateMovements(id).block() ? amount - 20 : amount;
+        var newAmount = Boolean.TRUE.equals(validateMovements(id).block()) ? amount - 20 : amount;
         return accountRepository.findById(id)
                 .map(updateAccountWithNewBalance(newAmount, Boolean.FALSE))
                 .flatMap(accountRepository::save)
@@ -68,7 +68,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     //Metodo para actualizar la cuenta con el nuevo saldo, para utilizar en los métodos debit y deposit
-    private Function<Account, Account> updateAccountWithNewBalance(double amount, Boolean isDebit) {
+    @Override
+    public Function<Account, Account> updateAccountWithNewBalance(double amount, Boolean isDebit) {
         return accountToUpdate -> {
             var newBalance = calculateBalance(accountToUpdate.getBalance(), amount, isDebit);
             accountToUpdate.setBalance(newBalance);

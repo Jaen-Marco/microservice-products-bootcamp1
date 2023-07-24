@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Credit {
 
     @Id private Long id;
-    private String type; //Personal, Empresarial y Tarjeta de credito
     private Long clientId;
     private Double balance;
     private Double creditLine;
+    private CreditType creditType;
 
 }

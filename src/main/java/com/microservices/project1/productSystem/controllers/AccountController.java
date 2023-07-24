@@ -1,7 +1,7 @@
 package com.microservices.project1.productSystem.controllers;
 
 import com.microservices.project1.productSystem.models.Account;
-import com.microservices.project1.productSystem.services.AccountService;
+import com.microservices.project1.productSystem.services.interf.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
