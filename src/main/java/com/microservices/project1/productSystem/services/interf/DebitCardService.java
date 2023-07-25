@@ -14,4 +14,5 @@ public interface DebitCardService {
     Mono<Void> deleteById (Long id);
 
     Mono<Double> debit(Long id, double amount);
+    Mono<Double> deposit(Long id, double amount);
 }

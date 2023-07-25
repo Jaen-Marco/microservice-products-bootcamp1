@@ -12,7 +12,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -65,5 +64,21 @@ public class DebitCardServiceImpl implements DebitCardService {
                 })
                 .map(Account::getBalance)
                 .defaultIfEmpty(0.0); // Valor predeterminado si no hay cuentas válidas
+    }
+
+    @Override
+    public Mono<Double> deposit(Long id, double amount) {
+        return debitCardRepository.findById(id)
+                .flatMap(debitCard -> {
+                    List<Long> accountsId = debitCard.getAccountsId();
+                    Long firstAccountId = accountsId.get(0);
+                    return accountRepository.findById(firstAccountId)
+                            .flatMap(account -> {
+                                double newBalance = account.getBalance() + amount;
+                                account.setBalance(newBalance);
+                                return accountRepository.save(account)
+                                        .map(Account::getBalance);
+                            });
+                });
     }
 }

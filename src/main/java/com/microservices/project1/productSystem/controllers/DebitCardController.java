@@ -37,4 +37,9 @@ public class DebitCardController {
         return debitCardService.debit(id, amount);
     }
 
+    @PutMapping("/{id}/deposit={amount}")
+    public Mono<Double> depositD(@PathVariable Long id, @PathVariable double amount){
+        return debitCardService.deposit(id, amount);
+    }
+
 }
